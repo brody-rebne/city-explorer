@@ -22,18 +22,9 @@ app.get('/location', (request, response) => {
 
 function City(city, obj) {
   this.search_query = city;
-  this.place_id = obj.place_id;
-  this.license = obj.licence;
-  this.osm_type = obj.osm_type;
-  this.osm_id = obj.osm_id;
-  this.boundingbox = obj.boundingbox;
-  this.lat = obj.lat;
-  this.lon = obj.lon;
-  this.display_name = obj.display_name;
-  this.class = obj.class;
-  this.type = obj.type;
-  this.importance = obj.importance;
-  this.icon = obj.icon;
+  this.formatted_query = obj.display_name;
+  this.latitude = obj.lat;
+  this.longitude = obj.lon;
 }
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
