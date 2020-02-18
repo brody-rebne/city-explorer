@@ -25,7 +25,7 @@ app.get('/weather', (request, response) => {
     let darksky = require('./data/darksky.json');
     let forecast = [];
     for(let i=0;i<darksky.daily.data.length;i++) {
-      let dailyWeather = new WeatherDay(darksky);
+      let dailyWeather = new WeatherDay(darksky, i);
       forecast.push(dailyWeather);
     }
     response.send(forecast);
@@ -41,9 +41,9 @@ function City(city, obj) {
   this.longitude = obj.lon;
 }
 
-function WeatherDay(obj) {
-  this.forecast = obj.daily.data.summary;
-  this.time = obj.daily.data.time.toDateString();
+function WeatherDay(obj, index) {
+  this.forecast = obj.daily.data[index].summary;
+  this.time = obj.daily.data[index].time.toDateString();
 }
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
