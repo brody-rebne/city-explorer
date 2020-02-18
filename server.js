@@ -22,10 +22,9 @@ app.get('/location', (request, response) => {
 
 app.get('/weather', (request, response) => {
   try {
-    let city = request.query.city;
     let darksky = require('./data/darksky.json');
     let forecast = [];
-    for(let i=0;i<8;i++) {
+    for(let i=0;i<darksky.daily.data.length;i++) {
       let dailyWeather = new WeatherDay(darksky);
       forecast.push(dailyWeather);
     }
