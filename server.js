@@ -20,8 +20,11 @@ app.get('/location', (request, response) => {
   }
 });
 
+console.log('weather running');
+
 app.get('/weather', (request, response) => {
   try {
+    let timezone = request.query.timezone;
     let darksky = require('./data/darksky.json');
     let forecast = [];
     for(let i=0;i<darksky.daily.data.length;i++) {
@@ -43,7 +46,8 @@ function City(city, obj) {
 
 function WeatherDay(obj, index) {
   this.forecast = obj.daily.data[index].summary;
-  this.time = obj.daily.data[index].time.toDateString();
+  let date = new Date(obj.daily.data[index].time);
+  this.time = date.toDateString();
 }
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
