@@ -20,3 +20,35 @@
 ## Credits and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 -->
+
+## Time Estimates
+
+### Feature #1: Repo Setup
+
+Estimate: 1:00
+
+Start Time: 9:20
+
+Finish Time: 10:50
+
+Actual Time: 1:30
+
+### Feature #2: Locations
+
+Estimate: 0:30
+
+Start Time: 11:00
+
+Finish Time: 11:30
+
+Actual Time: 0:30
+
+### Feature #3: Weather
+
+Estimate: 1:00
+
+Start Time: 11:40
+
+Finish Time: 13:20
+
+Actual Time: 1:40
