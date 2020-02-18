@@ -10,11 +10,26 @@ app.use(cors());
 const PORT = process.env.PORT || 3003;
 
 app.get('/location', (request, response) => {
-  try{
+  try {
     let city = request.query.city;
     let geoData = require('./data/geo.json');
     let location = new City(city, geoData[0]);
     response.send(location);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get('/weather', (request, response) => {
+  try {
+    let city = request.query.city;
+    let darksky = require('./data/darksky.json');
+    let forecast = [];
+    for(let i=0;i<8;i++) {
+      let dailyWeather = new WeatherDay(darksky);
+      forecast.push(dailyWeather);
+    }
+    response.send(forecast);
   } catch (err) {
     console.log(err);
   }
@@ -25,6 +40,11 @@ function City(city, obj) {
   this.formatted_query = obj.display_name;
   this.latitude = obj.lat;
   this.longitude = obj.lon;
+}
+
+function WeatherDay(obj) {
+  this.forecast = obj.daily.data.summary;
+  this.time = obj.daily.data.time.toDateString();
 }
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
