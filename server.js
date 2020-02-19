@@ -16,24 +16,23 @@ app.get('/location', (request, response) => {
     let location = new City(city, geoData[0]);
     response.send(location);
   } catch (err) {
-    console.log(err);
+    response.status(500).send(`${err}`);
   }
 });
-
-console.log('weather running');
 
 app.get('/weather', (request, response) => {
   try {
     let timezone = request.query.timezone;
     let darksky = require('./data/darksky.json');
-    let forecast = [];
-    for(let i=0;i<darksky.daily.data.length;i++) {
-      let dailyWeather = new WeatherDay(darksky, i);
-      forecast.push(dailyWeather);
-    }
+    let forecast = darksky.daily.data.map((fc) => new WeatherDay(fc));
+    console.log(forecast);
+    // for(let i=0;i<darksky.daily.data.length;i++) {
+    //   let dailyWeather = new WeatherDay(darksky, i);
+    //   forecast.push(dailyWeather);
+    // }
     response.send(forecast);
   } catch (err) {
-    console.log(err);
+    response.status(500).send(`${err}`);
   }
 });
 
@@ -44,9 +43,9 @@ function City(city, obj) {
   this.longitude = obj.lon;
 }
 
-function WeatherDay(obj, index) {
-  this.forecast = obj.daily.data[index].summary;
-  let date = new Date(obj.daily.data[index].time);
+function WeatherDay(obj) {
+  this.forecast = obj.summary;
+  let date = new Date(obj.time);
   this.time = date.toDateString();
 }
 
