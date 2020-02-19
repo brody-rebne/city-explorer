@@ -2,6 +2,7 @@
 
 const express = require('express');
 const app = express();
+const superagent = require('superagent');
 
 require('dotenv').config();
 const cors = require('cors');
@@ -10,19 +11,18 @@ app.use(cors());
 const PORT = process.env.PORT || 3003;
 
 app.get('/location', (request, response) => {
-  try {
+  let city = request.query.city;
+  let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.LOCATIONIQ_API}&q=${city}&format=json`;
+  superagent.get(url).then(results => {
     let city = request.query.city;
-    let geoData = require('./data/geo.json');
+    let geoData = results.body;
     let location = new City(city, geoData[0]);
     response.send(location);
-  } catch (err) {
-    response.status(500).send(`${err}`);
-  }
+  }).catch(err => console.error(err));
 });
 
 app.get('/weather', (request, response) => {
   try {
-    let timezone = request.query.timezone;
     let darksky = require('./data/darksky.json');
     let forecast = darksky.daily.data.map((fc) => new WeatherDay(fc));
     console.log(forecast);
