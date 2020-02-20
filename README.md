@@ -20,6 +20,9 @@ City Explorer is run on a Node.js backend, which is run on Express and deployed 
 
 **Feb 19 2020** - App uses APIs to return live information for location, weather, and trails.
 
+## Credits and Collaborations
+<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+
 ## Time Estimates
 
 ### Feature #A1: Repo Setup
@@ -90,38 +93,24 @@ Start Time: 11:10
 
 Finish Time: 12:00
 
-## Credits and Collaborations
-<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
--->
+Actual Time: 0:50
 
-## Time Estimates
-
-### Feature #1: Repo Setup
+### Feature C1: Database
 
 Estimate: 1:00
 
-Start Time: 9:20
+Start Time: 9:40
 
-Finish Time: 10:50
-
-Actual Time: 1:30
-
-### Feature #2: Locations
-
-Estimate: 0:30
-
-Start Time: 11:00
-
-Finish Time: 11:30
+Finish Time: 10:10
 
 Actual Time: 0:30
 
-### Feature #3: Weather
+### Feature C2: Server
 
-Estimate: 1:00
+Estimate: 2:00
 
-Start Time: 11:40
+Start Time: 10:10
 
-Finish Time: 13:20
+Finish Time: #:##
 
-Actual Time: 1:40
+Actual Time: #:##
