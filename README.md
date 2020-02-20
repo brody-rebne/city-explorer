@@ -111,6 +111,16 @@ Estimate: 2:00
 
 Start Time: 10:10
 
+Finish Time: 11:50
+
+Actual Time: 1:40
+
+### Feature C3: Deploy
+
+Estimate: 0:10
+
+Start Time: 12:00
+
 Finish Time: #:##
 
 Actual Time: #:##
