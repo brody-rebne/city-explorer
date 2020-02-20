@@ -3,6 +3,7 @@
 const express = require('express');
 const app = express();
 const superagent = require('superagent');
+const pg = require('pg');
 
 require('dotenv').config();
 const cors = require('cors');
@@ -10,14 +11,29 @@ app.use(cors());
 
 const PORT = process.env.PORT || 3003;
 
+const client = new pg.Client(process.env.DATABASE_URL);
+client.on('error', err => console.error(err));
+
 app.get('/location', (request, response) => {
   let city = request.query.city;
-  let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.LOCATIONIQ_API}&q=${city}&format=json`;
-  superagent.get(url).then(result => {
-    let city = request.query.city;
-    let geoData = result.body;
-    let location = new City(city, geoData[0]);
-    response.send(location);
+  let selectSQL = 'SELECT * FROM locations WHERE search_query = $1;';
+  let selectSafeValues = [city];
+  client.query(selectSQL, selectSafeValues).then(data => {
+    if(data.rowCount) {
+      console.log('location found in db');
+      response.send(data.rows[0]);
+    } else {
+      console.log('inserting into database');
+      let url = `https://us1.locationiq.com/v1/search.php?key=${process.env.LOCATIONIQ_API}&q=${city}&format=json`;
+      superagent.get(url).then(result => {
+        let geoData = result.body;
+        let location = new City(city, geoData[0]);
+        let insertSQL = 'INSERT INTO locations (search_query, formatted_query, latitude, longitude) VALUES ($1, $2, $3, $4);';
+        let insertSafeValues = [location.search_query, location.formatted_query, location.latitude, location.longitude];
+        client.query(insertSQL, insertSafeValues);
+        response.send(location);
+      });
+    }
   }).catch(err => console.error(err));
 });
 
@@ -30,8 +46,6 @@ app.get('/weather', (request, response) => {
     response.send(forecast);
   }).catch(err => console.error(err));
 });
-
-// https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=200689068-fbabe38f860e184addaeddc952eb5c87
 
 app.get('/trails', (request, response) => {
   let lat = request.query.latitude;
@@ -70,4 +84,6 @@ function Trail(obj) {
   this.condition_time = splitDateTime[1];
 }
 
-app.listen(PORT, () => console.log(`listening on ${PORT}`));
+client.connect().then(() => {
+  app.listen(PORT, () => console.log(`listening on ${PORT}`));
+});
