@@ -14,6 +14,7 @@ const serveLocation = require('./lib/serveLocation');
 const serveWeather = require('./lib/serveWeather');
 const serveTrails = require('./lib/serveTrails');
 const serveMovies = require('./lib/serveMovies');
+const serveRestaurants = require('./lib/serveRestaurants');
 
 app.get('/location', (request, response) => {
   serveLocation(request, response);
@@ -29,6 +30,10 @@ app.get('/trails', (request, response) => {
 
 app.get('/movies', (request, response) => {
   serveMovies(request, response);
+});
+
+app.get('/yelp', (request, response) => {
+  serveRestaurants(request, response);
 });
 
 client.connect().then(() => {
