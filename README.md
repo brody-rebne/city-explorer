@@ -121,6 +121,6 @@ Estimate: 0:10
 
 Start Time: 12:00
 
-Finish Time: #:##
+Finish Time: 12:30
 
-Actual Time: #:##
+Actual Time: 0:30
